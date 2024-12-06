@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CodeMirror, { EditorState } from '@uiw/react-codemirror';
+import CodeMirror from '@uiw/react-codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
@@ -8,8 +8,8 @@ import { EditorView } from '@codemirror/view';
 import { syntaxHighlighting } from '@codemirror/language';
 import { oneDarkHighlightStyle } from '@codemirror/theme-one-dark';
 
-export const PasteForm = () => {
-  const [text, setText] = useState('');
+export const PasteForm = ({title, setTitle, text, setText}) => {
+
   const [mode, setMode] = useState('plain'); // Default to plain text
 
   // Function to detect language mode from the first line
@@ -72,16 +72,26 @@ export const PasteForm = () => {
     },
     { dark: true }
   );
-  const cutomHeighlight = EditorState
+
 
   return (
-    <div className="w-full px-2 py-6 overflow-y-scroll h-96 rounded-xl bg-black/60">
+    <div className='flex flex-col items-center justify-center gap-3'>
+        <div className='w-full h-12 flex px-4 justify-start items-center text-[16px] text-white/60 rounded-xl bg-black/70 font-medium'>
+            <input type="text" name="Title" id={title} onChange={(e) => setTitle(e.target.value)} />
+        </div>
+    <div
+    className="w-full px-2 py-6 overflow-y-scroll h-96 rounded-xl bg-black/60"
+    style={{
+        boxShadow : '0px 3px 18.1px 0px rgba(0, 0, 0, 0.30) inset',
+    }}
+    >
       <CodeMirror
         value={text}
         extensions={[getEditorLanguage(), customTheme,  syntaxHighlighting(oneDarkHighlightStyle)]}
 
         onChange={(value) => setText(value)}
       />
+    </div>
     </div>
   );
 };

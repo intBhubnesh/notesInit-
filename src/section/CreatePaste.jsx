@@ -4,8 +4,8 @@ import  {Forground}  from "../components/Forground";
 
 
 export default function CreatePaste(){
-  return (
-    <> 
+  return ( 
+    <>
         <Background />
         <Forground />
     </>
