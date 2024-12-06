@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset input elements */
+input {
+  all: unset; /* Reset everything */
+}
+
+input:focus,
+input:active {
+  outline: none; /* Remove focus ring */
+  box-shadow: none; /* Remove focus shadow */
+  border: none; /* Ensure no border changes */
+}
+
+/* Apply a global font */
+*, body {
+  font-family: 'Inter', sans-serif;
+}
