@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { CategoryTag } from './CategoryTag';
-import { useDispatch, useSelector } from 'react-redux';
-import { addCategory } from '../redux/CategorySlice';
-import { nanoid } from '@reduxjs/toolkit';
 
-export const CategoryBar = () => {
+
+export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCreateCategory}) => {
     const [input, setInput] = useState('lable');
     const [reqAddCategory, setReqAddCategory] = useState(false);
-    const categoryList = useSelector((state) => state.Category.categoryList);
-    console.log(categoryList);
 
-    const dispatch = useDispatch()
 
     const getInputWidth = (text) => {
         const tempElement = document.createElement('span');
@@ -29,28 +24,27 @@ export const CategoryBar = () => {
         width: `${getInputWidth(input)}px`,
     };
 
-    function saveCategory() {
-        if (validCategory(input)) {
-            dispatch(addCategory({id:nanoid(), name:input, color:'#E8403B'  }))
-            setReqAddCategory(false)
-            setInput('lable')
-        }
+    // function ifExistInStore(name) {
+    // }
+    function ifExistInList(name) {
+       return  !pasteCategoryList.find(cat => cat.name === name)
     }
-    function validCategory(category) {
-        if (category && categoryList.find(cat => cat.name === category)) {
-            alert("record already exist !")
-            return false;
-
-        } else {
-            if(category)
-                return true
+    function saveCategory() {
+        if (input) {
+          handelCreateCategory(input);
+          setReqAddCategory(false)
+          setInput('lable');
         }
-}
+      }
+    function removeCategory(name) {
+        setPasteCategoryList(prev => prev = prev.filter(cat => cat.name !== name))
+    }
+
 return (
     <div className="flex flex-row items-center justify-start gap-5 border-t-[2px] border-white/10 py-5 mt-6">
         <div className="flex flex-row gap-5">
-            {categoryList.map(({ id, name, color }) => (
-                <CategoryTag key={id} lable={name} color={color} />
+            {pasteCategoryList.map(({ id, name, color }) => (
+                <CategoryTag key={id} lable={name} removeCategory={removeCategory} />
             ))}
         </div>
         {reqAddCategory && (
