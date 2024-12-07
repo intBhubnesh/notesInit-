@@ -34,7 +34,7 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
     if (mode === 'code') return javascript();
     if (mode === 'python') return python();
     if (mode === 'cpp') return cpp();
-    return []; // Plain text or unsupported mode
+    return []; // Plain text or unsupported mode 
   };
 
   // Custom theme for the CodeMirror editor
@@ -77,10 +77,10 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
   return (
     <div className='flex flex-col items-center justify-center gap-3'>
         <div className='w-full h-12 flex px-4 justify-start items-center text-[16px] text-white/60 rounded-xl bg-black/70 font-medium'>
-            <input type="text" name="Title" id={title} onChange={(e) => setTitle(e.target.value)} />
+            <input type="text" name="Title" value={title}  placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
         </div>
     <div
-    className="w-full px-2 py-6 overflow-y-scroll h-96 rounded-xl bg-black/60"
+    className="w-full px-2 py-6 overflow-y-scroll h-[420px] rounded-xl bg-black/60"
     style={{
         boxShadow : '0px 3px 18.1px 0px rgba(0, 0, 0, 0.30) inset',
     }}
@@ -88,7 +88,7 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
       <CodeMirror
         value={text}
         extensions={[getEditorLanguage(), customTheme,  syntaxHighlighting(oneDarkHighlightStyle)]}
-
+        placeholder="Paste your content here and keep the extension in the first line"
         onChange={(value) => setText(value)}
       />
     </div>

@@ -7,26 +7,28 @@ import { addCategory } from '../redux/CategorySlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { createPaste } from '../redux/pasteSlice';
 
-export const Forground = () => {
-  const [title, setTitle] = useState('Title');
+export const CreatePasteForground = () => {
+  const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [pasteCategoryList, setPasteCategoryList] = useState([]);
-  const categoryList = useSelector((state) => state.Category.categoryList);
+  const categoryList = useSelector(state => state.Category.categoryList);
   const pasteList = useSelector(state => state.Paste.pasteList)
   const dispatch = useDispatch();
     console.log(pasteList);
-    
+
   // Function to handle paste creation
   function handelCreatePaste() {
-    if (title && text) {
-      const newPaste = {
-        id: nanoid(),
-        title,
-        description: text,
-        category: pasteCategoryList,
-      };
+      const time = new Date()
+      if (title && text) {
+          const newPaste = {
+              id: nanoid(),
+              title,
+              time,
+              description: text,
+              category: pasteCategoryList,
+            };
       dispatch(createPaste(newPaste));
-      setTitle('Title');  // Reset title after creation
+      setTitle('');  // Reset title after creation
       setText('');        // Reset text after creation
       setPasteCategoryList([]); // Clear selected categories
     }
@@ -38,7 +40,7 @@ export const Forground = () => {
       alert("Category name cannot be empty!");
       return false;
     }
-    if (categoryList.find((cat) => cat.name === name)) {
+    if (pasteCategoryList.find((cat) => cat.name === name)) {
       alert("Category already exists!");
       return false;
     }
@@ -51,11 +53,11 @@ export const Forground = () => {
       const newCategory = {
         id: nanoid(),
         name: name,
-        color: '#E8403B',
+        isSelected : true
       };
       // Add the category to the global state and pasteCategoryList
       dispatch(addCategory(newCategory));
-      setPasteCategoryList((prev) => [...prev, newCategory]);
+      setPasteCategoryList((prev) =>  [...prev, newCategory.name]);
     }
   }
 

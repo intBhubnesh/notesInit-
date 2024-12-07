@@ -1,11 +1,11 @@
 import React from 'react'
 import {Background}  from "../components/Background";
-import {Forground}  from "../components/Forground";
+import {PasteBoxForground}  from "../components/PasteBoxForground";
 export default function PasteBox(){
   return (
     <div>
         <Background />
-        <Forground />
+        <PasteBoxForground />
     </div>
   )
 }

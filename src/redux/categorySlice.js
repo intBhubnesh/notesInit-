@@ -4,12 +4,12 @@ export const initialState = {
     categoryList: [{
         id: nanoid(),
         name : 'All',
-        color : 'pink'
+        isSelected : true
         }
         ,{
     id: nanoid(),
     name : 'Redux',
-    color : 'red'
+    isSelected : false
     }]
 }
 const categorySlice = createSlice({
@@ -17,12 +17,12 @@ const categorySlice = createSlice({
     initialState,
     reducers: {
         addCategory : (state, action) => {
-            const {id, name, color} = action.payload
+            const {id, name, isSelected} = action.payload
             if(id){
                 const newCategory = {
                     id,
                     name,
-                    color
+                    isSelected
                 }
                 state.categoryList.push(newCategory)
             }
@@ -33,8 +33,15 @@ const categorySlice = createSlice({
                 state.categoryList = state.categoryList.filter((cat) => cat.id !== removeCategoryId)
             }
         },
+        selectCategory : (state, action) => {
+            const selectedCategoryId = state.categoryList.find(cat => cat.id === action.payload)
+
+            if(selectedCategoryId){
+                selectedCategoryId.isSelected = !selectedCategoryId.isSelected
+            }
+        }
     }
 })
 
-export const {addCategory, removeCategory} = categorySlice.actions
+export const {addCategory, removeCategory, selectCategory} = categorySlice.actions
 export default categorySlice.reducer

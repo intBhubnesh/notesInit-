@@ -1,13 +1,13 @@
 import React from 'react'
 import  {Background}  from "../components/Background";
-import  {Forground}  from "../components/Forground";
+import  {CreatePasteForground}  from "../components/CreatePasteForground";
 
 
 export default function CreatePaste(){
-  return ( 
+  return (
     <>
         <Background />
-        <Forground />
+        <CreatePasteForground />
     </>
   )
 }
