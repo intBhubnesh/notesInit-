@@ -4,8 +4,9 @@ const initialState = {
     pasteList : [{
         id : nanoid(),
         title : "paste app",
+        time : '20 min',
         description : 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum neque repellat harum, accusamus facere esse, eligendi, iusto id asperiores aliquid natus ipsum doloribus',
-        category : ["all"],
+        category : ["All"],
     }]
 }
 
@@ -14,13 +15,14 @@ export const pasteSlice = createSlice({
   initialState,
   reducers: {
     createPaste: (state, action) => {
-        const {id, title, description, category } = action.payload
+        const {id, title, time='20 min', description, category=[] } = action.payload
         if(id){
             const newPaste = {
                 id,
                 title,
+                time,
                 description,
-                category
+                category : category
             }
             state.pasteList.push(newPaste)
         }

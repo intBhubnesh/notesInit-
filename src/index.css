@@ -18,3 +18,26 @@ input:active {
 *, body {
   font-family: 'Inter', sans-serif;
 }
+
+
+@layer base {
+  /* Custom Scrollbar Styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar width */
+    height: 0; /* Remove scrollbar height */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* No background for track */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent; /* No background for thumb */
+    border: none; /* Remove thumb border */
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+  }
+}

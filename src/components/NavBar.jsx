@@ -31,7 +31,7 @@ export const NavBar = ({createPaste}) => {
 
     const active = ' w-[52px] h-[35px]  rounded-xl bg-black/60 text-[#E8403B] shadow-md'
   return (
-    <div className='flex flex-row items-center justify-between w-full mt-4 '>
+    <div className='flex flex-row items-center justify-between w-full mt-4  border-b-[2px] border-white/10 pb-6 '>
         <h1 className='text-[38px] font-bold text-white'>Paste.</h1>
         <div className='flex flex-row gap-8'>
             {/* routing the pages  */}

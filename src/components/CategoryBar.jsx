@@ -41,10 +41,10 @@ export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCrea
     }
 
 return (
-    <div className="flex flex-row items-center justify-start gap-5 border-t-[2px] border-white/10 py-5 mt-6">
+    <div className="flex flex-row items-center justify-start gap-5 py-4">
         <div className="flex flex-row gap-5">
-            {pasteCategoryList.map(({ id, name, color }) => (
-                <CategoryTag key={id} lable={name} removeCategory={removeCategory} />
+            {pasteCategoryList.map((name) => (
+                <CategoryTag key={name} lable={name} removeCategory={removeCategory} />
             ))}
         </div>
         {reqAddCategory && (
