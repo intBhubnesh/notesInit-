@@ -18,14 +18,18 @@ const categorySlice = createSlice({
     reducers: {
         addCategory : (state, action) => {
             const {id, name, isSelected} = action.payload
-            if(id){
-                const newCategory = {
-                    id,
-                    name,
-                    isSelected
-                }
-                state.categoryList.push(newCategory)
+            if(state.categoryList.find(cat => cat.name === name)){
+                alert('added to the existing category !')
             }
+            else{
+                if(id){
+                    const newCategory = {
+                        id,
+                        name,
+                        isSelected
+                    }
+                    state.categoryList.push(newCategory)
+                }}
         },
         removeCategory : (state, action) => {
             const removeCategoryId = action.payload

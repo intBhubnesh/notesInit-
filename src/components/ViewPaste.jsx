@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react'
 import CodeMirror from '@uiw/react-codemirror';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { markdown } from '@codemirror/lang-markdown';
 import { javascript } from '@codemirror/lang-javascript';
 import { python } from '@codemirror/lang-python';
@@ -8,11 +10,17 @@ import { EditorView } from '@codemirror/view';
 import { syntaxHighlighting } from '@codemirror/language';
 import { oneDarkHighlightStyle } from '@codemirror/theme-one-dark';
 
-export const PasteForm = ({title, setTitle, text, setText}) => {
 
-  const [mode, setMode] = useState('plain'); // Default to plain text
+export const ViewPaste = () => {
+    const [mode, setMode] = useState('plain'); // Default to plain text
+    const pasteId = useParams('id')
+    const paste = useSelector(state => state.Paste.pasteList.find(paste => paste.id === pasteId.id))
 
-  // Function to detect language mode from the first line
+    useEffect(()=> {
+        const detectMode = detectModeFromText(paste.description)
+        setMode(detectMode)
+    }, [pasteId])
+      // Function to detect language mode from the first line
   const detectModeFromText = (inputText) => {
     const firstLine = inputText.split('\n')[0].trim(); // Get the first line
     if (firstLine === '.cpp') return 'cpp';
@@ -22,21 +30,14 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
     return 'plain'; // Default to plain text
   };
 
-  // Monitor changes in the text and detect mode dynamically
-  useEffect(() => {
-    const detectedMode = detectModeFromText(text);
-    setMode(detectedMode);
-  }, [text]); // Runs every time `text` changes
-
-  // Determine the language extension for CodeMirror
+      // Determine the language extension for CodeMirror
   const getEditorLanguage = () => {
-    if (mode === 'markdown') return markdown();
-    if (mode === 'code') return javascript();
-    if (mode === 'python') return python();
+      if (mode === 'markdown') return markdown();
+      if (mode === 'code') return javascript();
+      if (mode === 'python') return python();
     if (mode === 'cpp') return cpp();
     return []; // Plain text or unsupported mode
   };
-
   // Custom theme for the CodeMirror editor
   const customTheme = EditorView.theme(
     {
@@ -72,12 +73,11 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
     },
     { dark: true }
   );
-
-
   return (
-    <div className='flex flex-col items-center justify-center gap-3'>
+    <div>
+         <div className='flex flex-col items-center justify-center gap-3'>
         <div className='w-full h-12 flex px-4 justify-start items-center text-[16px] text-white/60 rounded-xl bg-black/70 font-medium'>
-            <input type="text" name="Title" value={title}  placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+            <h1>{paste.title}</h1>
         </div>
     <div
     className="w-full px-2 py-6 overflow-y-scroll h-[420px] rounded-xl bg-black/60"
@@ -86,13 +86,14 @@ export const PasteForm = ({title, setTitle, text, setText}) => {
     }}
     >
       <CodeMirror
-        value={text}
+        value={paste.description}
         extensions={[getEditorLanguage(), customTheme,  syntaxHighlighting(oneDarkHighlightStyle)]}
         placeholder="Paste your content here and keep the extension in the first line"
-        onChange={(value) => setText(value)}
-
+        readOnly={true}
+        style={{pointerEvents:'none', cursor:'none'}}
       />
     </div>
     </div>
-  );
-};
+    </div>
+  )
+}
