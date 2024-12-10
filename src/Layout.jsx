@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
-
-import { NavBar } from './components/NavBar'
 import { Background } from './components/Background'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function Layout() {
 
@@ -9,6 +9,7 @@ function Layout() {
     <>
     <Background />
     <Outlet />
+    <ToastContainer />
     </>
   )
 }

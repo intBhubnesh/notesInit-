@@ -7,6 +7,7 @@ import { addCategory } from '../redux/CategorySlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { createPaste, updatePaste } from '../redux/pasteSlice';
 import {  useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const CreatePasteForground = () => {
 
@@ -38,6 +39,11 @@ export const CreatePasteForground = () => {
       setTitle('');  // Reset title after creation
       setText('');        // Reset text after creation
       setPasteCategoryList([]); // Clear selected categories
+      return true
+    }
+    else{
+        // tostify message dont create empty paste
+        return false
     }
   }
   function handelUpdatePaste(){
@@ -52,29 +58,71 @@ export const CreatePasteForground = () => {
             };
 
       dispatch(updatePaste(Paste));
-      navigate(`/PasteBox`)
+      return true
+    }else {
+        return false
     }
   }
 
   function onClick(){
-    if(isEdit === true) handelUpdatePaste()
-    else handelCreatePaste()
+    const validPaste = isEdit === true ? handelUpdatePaste() : handelCreatePaste()
     setTitle('');  // Reset title after creation
       setText('');        // Reset text after creation
       setPasteCategoryList([]); // Clear selected categories
-      navigate(`/PasteBox`)
+
+      if(validPaste){
+        toast.success('Paste created successfully!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+    });
+      navigate(`/PasteBox`)}
+      else{
+        toast.warn('Paste is Empty', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+        })
+      }
   }
 
   // Function to validate category name
   function validCategory(name) {
     if (!name) {
-      alert("Category name cannot be empty!");
+      toast.warn("Category name cannot be empty!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return false;
     }
-    if (pasteCategoryList.find((cat) => cat.name === name)) {
-      alert("Category already exists!");
+
+    // Check if the category already exists
+    if (pasteCategoryList.includes(name)) {
+      toast.warn("Category already exists!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return false;
     }
+
     return true;
   }
 
@@ -89,6 +137,7 @@ export const CreatePasteForground = () => {
       // Add the category to the global state and pasteCategoryList
       dispatch(addCategory(newCategory));
       setPasteCategoryList((prev) =>  [...prev, newCategory.name]);
+      console.log("ok", pasteCategoryList)
     }
   }
 

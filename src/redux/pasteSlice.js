@@ -1,13 +1,15 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { loadState, saveState } from '../app/sessionStorage'
 
+const pasteSessionKey = "pasteList"
 const initialState = {
-    pasteList : [{
+    pasteList : loadState(pasteSessionKey ,[{
         id : nanoid(),
         title : "paste app",
         time : '20 min',
         description : 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum neque repellat harum, accusamus facere esse, eligendi, iusto id asperiores aliquid natus ipsum doloribus',
         category : ["All"],
-    }]
+    }])
 }
 
 export const pasteSlice = createSlice({
@@ -41,6 +43,7 @@ export const pasteSlice = createSlice({
     deletePaste: (state, action) => {
         if(action.payload)
             state.pasteList = state.pasteList.filter(paste => paste.id !== action.payload)
+
     },
     resetPaste: (state) => {
         state.listPaste = []
