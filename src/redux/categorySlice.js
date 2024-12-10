@@ -1,7 +1,9 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { loadState } from "../app/sessionStorage";
 
+const categorySessionKey = "categoryList"
 export const initialState = {
-    categoryList: [{
+    categoryList: loadState(categorySessionKey, [{
         id: nanoid(),
         name : 'All',
         isSelected : true
@@ -10,7 +12,7 @@ export const initialState = {
     id: nanoid(),
     name : 'Redux',
     isSelected : false
-    }]
+    }])
 }
 const categorySlice = createSlice({
     name : 'category',

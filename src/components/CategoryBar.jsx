@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CategoryTag } from './CategoryTag';
+import { toast } from 'react-toastify';
 
 
 export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCreateCategory}) => {
@@ -24,7 +25,7 @@ export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCrea
         width: `${getInputWidth(input)}px`,
     };
 
- 
+
     function saveCategory() {
         if (input) {
           handelCreateCategory(input);

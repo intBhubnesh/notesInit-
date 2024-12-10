@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux';
 import { deletePaste } from '../redux/pasteSlice';
 import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 export const PasteCard = ({id, title, description, time='20 min'}) => {
 
     const navigate = useNavigate()
@@ -78,6 +79,15 @@ function timeAgo(createdTime) {
             // delete the paste from the store
             if (window.confirm("Are you sure you want to delete this paste?")) {
                 dispatch(deletePaste(id));
+                toast.success('paste has been deleted !', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                });
               }
           }
         },
@@ -95,7 +105,16 @@ function timeAgo(createdTime) {
           </svg>,
           action: useCallback(() => {
             window.navigator.clipboard.writeText(description)
-            alert('file copied to clipboard')
+
+            toast.success('file copied to clipboard !', {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                theme: "colored",   
+            });
           },[description, id ])
         }
     ]
