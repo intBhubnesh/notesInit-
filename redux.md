@@ -71,3 +71,66 @@ export const counterSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = counterSlice.actions
 
 export default counterSlice.reducer
+
+
+
+
+
+1. useNavigate
+
+    Purpose:
+    It is a function hook used for imperative navigation. You call it when you want to programmatically navigate to another route in response to user actions, such as a button click.
+
+    Key Features:
+        Allows navigation to specific paths or routes programmatically.
+        Can replace the current history entry or push a new one.
+        Supports optional state passing between routes.
+
+    Use Cases:
+        When you need to redirect the user after an event (e.g., form submission).
+        Navigating programmatically in response to a function call.
+
+    Example:
+
+    import { useNavigate } from 'react-router-dom';
+
+    const MyComponent = () => {
+      const navigate = useNavigate();
+
+      const handleButtonClick = () => {
+        navigate('/about', { state: { fromHome: true } }); // Navigate to /about and pass state
+      };
+
+      return <button onClick={handleButtonClick}>Go to About</button>;
+    };
+
+2. useNavigation
+
+    Purpose:
+    It provides read-only information about the ongoing navigation process. It is useful when you need to know the state of the current navigation, such as whether a navigation action is in progress.
+
+    Key Features:
+        Provides access to the current navigation state (e.g., idle, loading, submitting).
+        Useful for showing loading indicators during route transitions.
+
+    Use Cases:
+        When you want to show a spinner or loading state while navigating between routes.
+        For applications that require enhanced UI feedback during navigation.
+
+    Example:
+
+import { useNavigation } from 'react-router-dom';
+
+const MyComponent = () => {
+  const navigation = useNavigation();
+
+  return (
+    <div>
+      {navigation.state === 'loading' ? (
+        <p>Loading...</p>
+      ) : (
+        <p>Navigation state: {navigation.state}</p>
+      )}
+    </div>
+  );
+};

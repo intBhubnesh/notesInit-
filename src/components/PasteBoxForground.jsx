@@ -3,8 +3,10 @@ import { NavBar } from './NavBar';
 import { CategorySelection } from './CategorySelection';
 import { PasteCard } from './PasteCard';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const PasteBoxForground = () => {
+    const navigate = useNavigate()
     const allPaste = useSelector((state) => state.Paste.pasteList);
     const [pasteList, setPasteList] = useState([])
     const filterCategoryList = useSelector(state => state.Category.categoryList.filter(cat => cat.isSelected === true).map(cat => cat.name))
@@ -20,7 +22,7 @@ export const PasteBoxForground = () => {
     // Group pastes alphabetically
     const groupedPastes = useMemo(() => {
         const groups = {};
-        console.log(pasteList);
+        console.log('Hey',pasteList);
     pasteList.forEach(({ title, id, ...rest }) => {
       const letter = title[0].toUpperCase();
       if (!groups[letter]) groups[letter] = [];
@@ -29,9 +31,14 @@ export const PasteBoxForground = () => {
     return groups;
   }, [pasteList]);
 
+    // add the
+    function onClick(){
+        navigate(`/`)
+    }
+
   return (
     <div className='absolute px-8 inset-0 z-0 m-4 bg-black/40 backdrop-blur-xl rounded-[32px] outline-2 outline-zinc-400/30 outline'>
-      <NavBar />
+      <NavBar lable={pasteList.length} onClick={onClick} />
       <CategorySelection
       setSelectedTag={setSelectedTag}
       />
@@ -46,7 +53,7 @@ export const PasteBoxForground = () => {
               </div>
               <div className='flex flex-row flex-wrap gap-4 mt-5'>
                 {groupedPastes[letter].map(({ id, title, description, time }) => (
-                  <PasteCard key={id} title={title} description={description} time={time}/>
+                  <PasteCard key={id} id={id} title={title} description={description} time={time}/>
                 ))}
               </div>
             </div>

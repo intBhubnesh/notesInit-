@@ -7,7 +7,9 @@ import { NavLink } from 'react-router-dom';
 
 
 
-export const NavBar = ({createPaste}) => {
+export const NavBar = ({onClick, lable=""}) => {
+
+
     const icons = {
         lightIcon: <svg width="24" height="25" viewBox="0 0 24 25" fill='none'   xmlns="http://www.w3.org/2000/svg">
         <path d="M12 1.69995V4.39995M19.6368 4.86315L17.7276 6.77235M22.8 12.5H20.1M19.6368 20.1368L17.7276 18.2276M12 20.6V23.3M6.27235 18.2276L4.36315 20.1368M3.89995 12.5H1.19995M6.27235 6.77235L4.36315 4.86315M16.5 12.5C16.5 13.6934 16.0258 14.838 15.1819 15.6819C14.338 16.5258 13.1934 17 12 17C10.8065 17 9.66188 16.5258 8.81797 15.6819C7.97406 14.838 7.49995 13.6934 7.49995 12.5C7.49995 11.3065 7.97406 10.1619 8.81797 9.31797C9.66188 8.47406 10.8065 7.99995 12 7.99995C13.1934 7.99995 14.338 8.47406 15.1819 9.31797C16.0258 10.1619 16.5 11.3065 16.5 12.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -23,33 +25,30 @@ export const NavBar = ({createPaste}) => {
         </svg>
     }
 
-    const [isPasteBoxOpen, setIsPasteBoxOpen] = useState(false)
-
     const dispatcher = useDispatch()
     const theme = useSelector(state => state.Theme.mode)
 
 
     const active = ' w-[52px] h-[35px]  rounded-xl bg-black/60 text-[#E8403B] shadow-md'
   return (
-    <div className='flex flex-row items-center justify-between w-full mt-4  border-b-[2px] border-white/10 pb-6 '>
+    <>
+        <div className='flex flex-row items-center justify-between w-full mt-4  border-b-[2px] border-white/10 pb-6 '>
         <h1 className='text-[38px] font-bold text-white'>Paste.</h1>
         <div className='flex flex-row gap-8'>
             {/* routing the pages  */}
             <div className='inline-flex items-center justify-between gap-4 '>
                 <NavLink
-                to='/pasteList'
+                to='/PasteBox'
                 className={({ isActive }) =>
                     `inline-flex items-center justify-center
-                    ${ isActive ? active : 'text-white'}`}
-                onClick={() => setIsPasteBoxOpen(true)}>
+                    ${ isActive ? active : 'text-white'}`}>
                     {icons.pasteBoxIcon}
                 </NavLink>
                 <NavLink
                 to='/'
                 className={({ isActive }) =>
                     `inline-flex items-center justify-center
-                    ${ isActive ? active : 'text-white'}`}
-                onClick={() => setIsPasteBoxOpen(false)} >
+                    ${ isActive ? active : 'text-white'}`}>
                     {icons.createPaste}
                 </NavLink>
             </div>
@@ -69,7 +68,9 @@ export const NavBar = ({createPaste}) => {
                 </div>
             </div>
         </div>
-        < Button onClick={createPaste}/>
-    </div>
+            < Button lable={lable} onClick={onClick}/>
+        </div>
+
+    </>
   )
 }

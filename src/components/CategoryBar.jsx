@@ -24,11 +24,7 @@ export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCrea
         width: `${getInputWidth(input)}px`,
     };
 
-    // function ifExistInStore(name) {
-    // }
-    function ifExistInList(name) {
-       return  !pasteCategoryList.find(cat => cat.name === name)
-    }
+ 
     function saveCategory() {
         if (input) {
           handelCreateCategory(input);

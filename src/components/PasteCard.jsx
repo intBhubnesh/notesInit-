@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux';
+import { deletePaste } from '../redux/pasteSlice';
+import { NavLink, useNavigate, useNavigation } from 'react-router-dom';
+export const PasteCard = ({id, title, description, time='20 min'}) => {
 
-export const PasteCard = ({title, description, time='20 min'}) => {
-
-
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 function timeAgo(createdTime) {
     const now = new Date();
     const diffInMs = now - new Date(createdTime);  // Time difference in milliseconds
@@ -36,7 +39,10 @@ function timeAgo(createdTime) {
             <rect width="16" height="14.2222" fill="white" transform="translate(0.960083 0.888916)"/>
             </clipPath>
             </defs>
-            </svg>
+            </svg>,
+            action: () => {
+                navigate(`/ViewPaste/${id}`);
+            }
 
         },
         {
@@ -50,7 +56,11 @@ function timeAgo(createdTime) {
                 <rect width="16" height="16" fill="white"/>
               </clipPath>
             </defs>
-          </svg>
+          </svg>,
+          action : () => {
+            // route to the view page in the edit mode ( similar to the create Paste Screen)
+            navigate(`/${id}?edit=true`);
+          }
         },
         {
             name : 'delete',
@@ -63,7 +73,13 @@ function timeAgo(createdTime) {
                 <rect width="12.96" height="14.8114" fill="white" transform="translate(0.0400391 0.594238)"/>
               </clipPath>
             </defs>
-          </svg>
+          </svg>,
+          action : () => {
+            // delete the paste from the store
+            if (window.confirm("Are you sure you want to delete this paste?")) {
+                dispatch(deletePaste(id));
+              }
+          }
         },
         {
             name : 'copy',
@@ -76,7 +92,11 @@ function timeAgo(createdTime) {
                 <rect width="12.96" height="14.8114" fill="white" transform="translate(0 0.594238)"/>
               </clipPath>
             </defs>
-          </svg>
+          </svg>,
+          action: useCallback(() => {
+            window.navigator.clipboard.writeText(description)
+            alert('file copied to clipboard')
+          },[description, id ])
         }
     ]
   return (
@@ -89,8 +109,8 @@ function timeAgo(createdTime) {
             <div>
                 <div className='flex flex-row w-full gap-3'>
                     {
-                        actionIcons.map(({name, path}) => (
-                            <div key={name}>{path}</div>
+                        actionIcons.map(({name, path, action}) => (
+                            <NavLink key={name} onClick={action}>{path}</NavLink>
                         ))
                     }
                 </div>

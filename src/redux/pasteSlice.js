@@ -28,13 +28,22 @@ export const pasteSlice = createSlice({
         }
     },
     updatePaste: (state, action) => {
-
+        const { id, title, time='20 min', description, category=[] } = action.payload
+        const updatePaste = state.pasteList.find(paste => paste.id === id )
+        console.log('bye',updatePaste)
+        if(updatePaste){
+                updatePaste.title = title,
+                updatePaste.time = time,
+                updatePaste.description = description,
+                updatePaste.category =  category
+        }
     },
     deletePaste: (state, action) => {
-
+        if(action.payload)
+            state.pasteList = state.pasteList.filter(paste => paste.id !== action.payload)
     },
-    resetPaste: (state, action) => {
-
+    resetPaste: (state) => {
+        state.listPaste = []
     },
   },
 })
