@@ -1,5 +1,6 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
-import { loadState } from "../app/sessionStorage";
+import { loadState, saveState } from "../app/sessionStorage";
+import { toast } from "react-toastify";
 
 const categorySessionKey = "categoryList"
 export const initialState = {
@@ -45,9 +46,15 @@ const categorySlice = createSlice({
             if(selectedCategoryId){
                 selectedCategoryId.isSelected = !selectedCategoryId.isSelected
             }
+        },
+        resetCategory : (state) => {
+            state.categoryList = [{ id: nanoid(), name: 'All', isSelected: true }];
+            saveState(categorySessionKey, state.categoryList);
+            toast.success('All categories have been reset.', { theme: 'colored' });
+
         }
     }
 })
 
-export const {addCategory, removeCategory, selectCategory} = categorySlice.actions
+export const {addCategory, removeCategory, selectCategory, resetCategory} = categorySlice.actions
 export default categorySlice.reducer
