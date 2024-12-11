@@ -17,7 +17,7 @@ export const CreatePasteForground = () => {
     const [lable] = useState(isEdit ? 'Edit' : 'Create')
     const pasteId = useParams('id')
     const paste = useSelector(state => state.Paste.pasteList.find(paste => paste.id === pasteId.id))
-    const [pasteCategoryList, setPasteCategoryList] = useState(paste ? paste.category :[]);
+    const [pasteCategoryList, setPasteCategoryList] = useState(paste ? paste.category : []);
     const [title, setTitle] = useState(paste ? paste.title : '');
     const [text, setText] = useState(paste ? paste.description : '');
     const navigate = useNavigate()
@@ -141,10 +141,12 @@ export const CreatePasteForground = () => {
     }
   }
 
+
   return (
     <div className='absolute px-8 inset-0 z-0 m-4 bg-black/40 backdrop-blur-xl rounded-[32px] outline-2 outline-zinc-400/30 outline'>
       <NavBar onClick={onClick} lable={lable} />
       <CategoryBar
+
         pasteCategoryList={pasteCategoryList}
         setPasteCategoryList={setPasteCategoryList}
         handelCreateCategory={handelCreateCategory}

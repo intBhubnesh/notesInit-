@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CategoryTag } from './CategoryTag';
-import { toast } from 'react-toastify';
 
 
 export const CategoryBar = ({pasteCategoryList, setPasteCategoryList, handelCreateCategory}) => {

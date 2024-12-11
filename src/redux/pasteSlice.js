@@ -46,7 +46,8 @@ export const pasteSlice = createSlice({
 
     },
     resetPaste: (state) => {
-        state.listPaste = []
+        state.pasteList = []
+        saveState(pasteSessionKey, state.pasteList)
     },
   },
 })

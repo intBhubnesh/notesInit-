@@ -57,9 +57,9 @@ export const NavBar = ({onClick, lable=""}) => {
             {/* theme toggle  */}
             <div className='inline-flex items-center justify-between gap-4 '>
             <div className={` inline-flex items-center justify-center  ${theme === 'light' ?  active : "text-white"}`}
-            onClick={() => dispatcher(toggleTheme('light'))}>
-            {icons.lightIcon}
-</div>
+                onClick={() => dispatcher(toggleTheme('light'))}>
+                {icons.lightIcon}
+            </div>
 
                 <div
                 className={`inline-flex items-center justify-center  ${theme === 'dark' ?  active : "text-white"}`}
