@@ -3,7 +3,7 @@ import { NavBar } from './NavBar';
 import { CategoryBar } from './CategoryBar';
 import { PasteForm } from './PasteForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory } from '../redux/CategorySlice';
+import { addCategory } from '../redux/categorySlice';
 import { nanoid } from '@reduxjs/toolkit';
 import { createPaste, updatePaste } from '../redux/pasteSlice';
 import {  useNavigate, useParams, useSearchParams } from 'react-router-dom';
